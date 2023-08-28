@@ -33,7 +33,7 @@ pipeline {
                 sh 'docker-compose run app composer install'
             }
         }
-        stage("Run composer install") {
+        stage("Run tests") {
             steps {
                 sh 'docker-compose run app php artisan test'
             }
