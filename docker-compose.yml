@@ -1,11 +1,12 @@
 services:
-    laravel.test:
+    app:
         build:
             context: ./vendor/laravel/sail/runtimes/8.2
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.2/app
+        container_name: app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -26,6 +27,7 @@ services:
             - redis
     mysql:
         image: 'mysql/mysql-server:8.0'
+        container_name: mysql
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -50,6 +52,7 @@ services:
             timeout: 5s
     redis:
         image: 'redis:alpine'
+        container_name: redis
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
@@ -65,16 +68,18 @@ services:
             timeout: 5s
     jenkins:
         image: jenkins/jenkins:lts
+        container_name: jenkins
         restart: always
         privileged: true
         user: root
         ports:
             - 9001:8080
             - 50000:50000
-        container_name: jenkins
         volumes:
             - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home
             - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            - sail
 networks:
     sail:
         driver: bridge
