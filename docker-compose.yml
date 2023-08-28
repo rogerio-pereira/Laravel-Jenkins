@@ -1,7 +1,7 @@
 services:
-    app:
+    laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.2
+            context: ./docker/8.2
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -39,7 +39,7 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
             - 'sail-mysql:/var/lib/mysql'
-            - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - './docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - sail
         healthcheck:
@@ -67,6 +67,9 @@ services:
             retries: 3
             timeout: 5s
     jenkins:
+        build:
+            context: ./docker/jenkins
+            dockerfile: Dockerfile
         image: jenkins/jenkins:lts
         container_name: jenkins
         restart: always
@@ -79,7 +82,6 @@ services:
             - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home
             - /var/run/docker.sock:/var/run/docker.sock
             - /usr/bin/docker:/usr/bin/docker
-            - /usr/bin/docker-compose:/usr/bin/docker-compose
         networks:
             - sail
 networks:
