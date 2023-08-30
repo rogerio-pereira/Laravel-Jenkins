@@ -34,12 +34,12 @@ pipeline {
         // }
         stage("Run composer install") {
             steps {
-                sh 'docker-compose run app composer install'
+                sh 'docker exec test.jenkins.app composer install'
             }
         }
         stage("Run tests") {
             steps {
-                sh 'docker-compose run app php artisan test'
+                sh 'docker exec test.jenkins.app php artisan test'
             }
         }
     }
