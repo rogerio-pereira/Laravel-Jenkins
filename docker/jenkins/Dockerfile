@@ -9,7 +9,7 @@ RUN add-apt-repository \
    stable"
 RUN apt-get update -qq \
     && apt-get -y install docker-ce
-RUN curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+RUN curl -SL https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-linux-x86_64 -o /usr/bin/docker-compose
 RUN chmod +x /usr/bin/docker-compose \
     && usermod -aG docker jenkins \
     && chgrp docker /usr/local/bin/docker-compose \
