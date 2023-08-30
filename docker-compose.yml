@@ -6,7 +6,7 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.2/app
-        container_name: app
+        container_name: test.jenkins.app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -27,7 +27,7 @@ services:
             - redis
     mysql:
         image: 'mysql/mysql-server:8.0'
-        container_name: mysql
+        container_name: test.jenkins.mysql
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -52,7 +52,7 @@ services:
             timeout: 5s
     redis:
         image: 'redis:alpine'
-        container_name: redis
+        container_name: test.jenkins.redis
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
