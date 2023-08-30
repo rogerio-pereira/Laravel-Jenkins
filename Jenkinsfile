@@ -14,7 +14,11 @@ pipeline {
         //     steps {
         //         script {
         //             try {
-        //                 sh 'docker rm -f $(docker ps -a -q)'
+        //                 /*
+        //                  * Remove all containers that start with test.jenkins
+        //                  *      Those are defined in docker-compose.yml > container_name
+        //                  */
+        //                 sh 'docker rm -f $(docker ps | grep test.jenkins. | cut -d ' ' -f1)'
         //             }
         //             catch(Exception e) {
         //                 echo "No running containers to clear up..."
